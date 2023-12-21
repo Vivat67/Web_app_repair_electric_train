@@ -19,8 +19,7 @@
 
 <body>
     {{ toastr.include_toastr_js() }}
-    <section class="d-flex flex-column justify-content-between main" id="main"
-        style="min-width: 220px;background: #2E3033;">
+    <section class="d-flex flex-column justify-content-between main" id="main_log_reg" style="min-width: 220px">
         <div class="col" id="conteiner_nav_bar">
             <nav class="navbar navbar-dark navbar-expand-md py-3" id="nav_top">
                 <div class="container"><a class="navbar-brand d-flex align-items-center"
@@ -89,39 +88,6 @@
                 </form>
             </div>
             <br>
-        </div>
-        <div class="col d-flex flex-row align-items-end" id="footer"
-            style="/*font-size: 14px;*//*color: #ffffff;*//*font-family: Montserrat, sans-serif;*/border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">
-            <div class="container d-flex justify-content-evenly" id="footer_main_conteiner">
-                <div class="row d-flex flex-column" id="footer_left_row"><a class="nav-link"
-                        href="{{ url_for('repair_information') }}">
-                        <div class="col d-flex justify-content-center align-items-center" id="footer_img_col"><img
-                                width="45px" height="45px" src="static/assets/img/mechanic-tools_v2.png"></div>
-                        <div class="col d-flex justify-content-center align-items-center" id="footer_par_col">
-                            <p style="text-align: center;">Сведенья ремонта</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="row" id="footer_center_row">
-                    <div class="col d-flex flex-column justify-content-evenly" id="footer_center_col_menu"
-                        style="margin: 10px 0px 0px 0px;">
-                        <p class="footer_center_text"><a class="nav-link active"
-                                href="{{ url_for('index') }}">Главная</a></p>
-                        <p class="footer_center_text"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a></p>
-                        <p class="footer_center_text"><a class="nav-link" href="{{ url_for('index') }}">Статистика</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="row d-flex flex-column" id="footer_right_row"><a class="nav-link"
-                        href="https://web.telegram.org/a/#6211235689">
-                        <div class="col d-flex justify-content-center align-items-center" id="footer_img_col-1"><img
-                                width="45px" height="45px" src="static/assets/img/send_5801504.png"></div>
-                        <div class="col d-flex justify-content-center align-items-center" id="footer_par_col-1">
-                            <p style="text-align: center;font-size: 14px;">&nbsp;Шкафы ЭД-9М</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
     <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
