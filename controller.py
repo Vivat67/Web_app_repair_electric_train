@@ -99,6 +99,7 @@ def redirect_to_sign(response):
 
 
 @app.route('/repair_information', methods=['GET', 'POST'])
+@login_required
 def repair_information():
     if request.method == 'GET':
         return render_template('repair_inf.html')
