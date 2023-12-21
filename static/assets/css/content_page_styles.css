@@ -1,0 +1,53 @@
+#main {
+  width: 100%;
+  min-height: 100vh;
+}
+
+#content {
+  margin: 20px;
+  max-width: 1000px;
+}
+
+.footer_center_text {
+  text-align: center;
+  font-size: 14px;
+}
+
+#footer {
+  color: #ffffff;
+  font-family: Montserrat, sans-serif;
+  padding-top: 40px;
+}
+
+#footer_main_conteiner {
+  height: 120px;
+  width: 100%;
+  border-top-style: solid;
+  border-radius: 15px;
+}
+
+
+#footer_par_col {
+  font-size: 14px;
+  width: 80px;
+  padding: 0px;
+}
+
+#footer_left_row {
+  margin: 10px 0px 0px 0px;
+}
+
+#footer_right_row {
+  width: 80px;
+  margin: 10px 0px 0px 0px;
+}
+
+.register {
+  color: #ffffff;
+}
+
+.repair_information {
+  color: #ffffff;
+  margin: 20px;
+  max-width: 1000px;
+}

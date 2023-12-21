@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Главная</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/Navbar-With-Button-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}">
+</head>
+
+<body>
+    <section id="main" class="main">
+        <div class="col" id="conteiner_nav_bar">
+            <nav class="navbar navbar-dark navbar-expand-md py-3" id="nav_top">
+                <div class="container"><a class="navbar-brand d-flex align-items-center"
+                        href="{{ url_for('index') }}"><span id="logo"></span></a><button data-bs-toggle="collapse"
+                        class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
+                            navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="navbar-nav text-end me-auto" id="center_nav">
+                            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Главная</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Статистика</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav text-end me-auto" id="right_nav">
+                            {% if not current_user.is_authenticated %}
+                            <li class="nav-item right"><a class="nav-link active"
+                                    href="{{ url_for('login') }}">Войти</a>
+                            </li>
+                            <li class="nav-item right"><a class="nav-link"
+                                    href="{{ url_for('registration') }}">Регистрация</a></li>
+                            {% else %}
+                            <li class="nav-item right"><a class="nav-link active">{{ current_user.surname }} {{
+                                    current_user.name }}</a>
+                            </li>
+                            <li class="nav-item right"><a class="nav-link" href="{{ url_for('logout') }}">Выйти</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container d-flex flex-row" id="diagnostics_container">
+            <div class="col d-flex flex-column-reverse align-items-center align-items-sm-center align-items-xxl-center"
+                id="info_bot_col"><a class="nav-link" href="https://web.telegram.org/a/#6211235689">
+                    <div class="row d-flex flex-column align-items-xxl-center" id="row_info_bot">
+                        <div
+                            class="col text-center d-flex justify-content-center align-items-center align-content-center">
+                            <img class="justify-content-center" id="icon_tel"
+                                src="{{ url_for('static', filename='assets/img/send_5801504.png') }}" width="45"
+                                height="45">
+                        </div>
+                        <div class="col d-flex flex-column justify-content-center align-items-center align-content-center align-self-center"
+                            id="info_bot_dis">
+                            <p id="info_bot_dis_p">Аппараты в шкафах ЭД 9м</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col d-flex flex-column" id="center_col">
+                <h1 id="diaagnostics_head">Диагностика</h1><button class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Токоприемники</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Цепи ВВ</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Движение поезда</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Запуск АРФ</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">ДНТ</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">ДК</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Зарядный агрегат</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Вспом. цепи</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Силовые цепи</button><button
+                    class="btn btn-primary diagnostics_but" type="button"
+                    style="background: var(--bs-border-color-translucent);">Реостатный тормоз</button>
+            </div>
+            <div class="col d-flex d-md-flex justify-content-center justify-content-md-center"
+                id="col_recent_incidents"><a class="nav-link" href="{{ url_for('repair_information') }}">
+                    <div class="row d-flex" id="row_recent_incidents">
+                        <div
+                            class="col d-flex flex-column justify-content-center align-items-center align-content-center align-self-center align-items-lg-center">
+                            <img id="img_recent_incidents"
+                                src="{{ url_for('static', filename='assets/img/mechanic-tools_v2.png') }}" width="45px"
+                                height="45px">
+                        </div>
+                        <div class="col d-flex justify-content-center align-items-md-center">
+                            <p class="text-center d-flex" id="p_recent_incidents">Сведенья&nbsp; ремонта</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.js"></script>
+</body>
+
+</html>

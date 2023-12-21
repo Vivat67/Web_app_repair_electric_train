@@ -1,0 +1,242 @@
+#main {
+  width: 100%;
+  background: url("../../assets/img/fon_small.jpg") center / cover no-repeat;
+  height: 100vh;
+}
+
+@media (min-width: 768px) {
+  #main {
+    background: url("../../assets/img/fon_big.jpg") center / cover no-repeat;
+  }
+}
+
+@media (max-width: 300px) {
+  .right {
+    padding: 0px 30px;
+  }
+}
+
+#diagnostics_container {
+  padding: 0px;
+  height: 495px;
+  color: var(--bs-yellow);
+}
+
+@media (min-width: 576px) {
+  #diagnostics_container {
+    height: 470px;
+    color: var(--bs-yellow);
+  }
+}
+
+@media (min-width: 992px) {
+  #diagnostics_container {
+    padding: 0px;
+    height: 475px;
+    color: var(--bs-yellow);
+  }
+}
+
+#diaagnostics_head {
+  color: rgb(213, 38, 39);
+  text-align: center;
+  font-size: 24px;
+  padding: 0px 0px 15px 0px;
+}
+
+@media (min-width: 576px) {
+  #diaagnostics_head {
+    color: rgb(213, 38, 39);
+    text-align: center;
+    font-size: 24px;
+    padding: 0px 0px 15px 0px;
+  }
+}
+
+.diagnostics_but {
+  margin: 4px 0px;
+  font-size: 14px;
+  border-style: solid;
+  border-color: rgb(213, 38, 39);
+}
+
+#center_col {
+  height: 100%;
+}
+
+#row_info_bot {
+  font-family: Montserrat, sans-serif;
+  padding: 0px;
+  height: 120px;
+  width: 90px;
+  border-style: solid;
+  border-color: rgb(213, 38, 39);
+  border-radius: 15px;
+}
+
+@media (min-width: 768px) {
+  #row_info_bot {
+    font-family: Montserrat, sans-serif;
+    height: 150px;
+    width: 120px;
+    border-style: solid;
+    border-color: rgb(213, 38, 39);
+    border-radius: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  #row_info_bot {
+    font-family: Montserrat, sans-serif;
+    padding: 0px;
+    height: 160px;
+    width: 130px;
+    border-style: solid;
+    border-color: rgb(213, 38, 39);
+    border-radius: 15px;
+  }
+}
+
+#row_recent_incidents {
+  font-family: Montserrat, sans-serif;
+  margin: 0px 5px 3px 7px;
+  font-family: Montserrat, sans-serif;
+  margin: 55px 0px 0px 0px;
+  width: 90px;
+  height: 120px;
+  border-style: solid;
+  border-color: rgb(213, 38, 39);
+  border-radius: 15px;
+}
+
+@media (min-width: 576px) {
+  #row_recent_incidents {
+    margin: 0px 5px 3px 7px;
+    font-family: Montserrat, sans-serif;
+    margin: 55px 0px 0px 0px;
+    width: 90px;
+    height: 120px;
+    border-style: solid;
+    border-color: rgb(213, 38, 39);
+    border-radius: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  #row_recent_incidents {
+    margin: 0px 5px 3px 7px;
+    font-family: Montserrat, sans-serif;
+    margin: 55px 0px 0px 0px;
+    width: 120px;
+    height: 150px;
+    border-style: solid;
+    border-color: rgb(213, 38, 39);
+    border-radius: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  #row_recent_incidents {
+    font-family: Montserrat, sans-serif;
+    margin: 55px 0px 0px 0px;
+    width: 130px;
+    height: 160px;
+    border-style: solid;
+    border-color: rgb(213, 38, 39);
+    border-radius: 15px;
+  }
+}
+
+#col_info_bot {
+  padding: 0px;
+  border-radius: 15px;
+  border-style: solid;
+  border-color: rgb(213, 38, 39);
+}
+
+#info_bot_col {
+  padding: 260px 0px 0px 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+#icon_tel {
+  margin: 10px 0px 0px 0px;
+  width: 45px;
+  height: 45px;
+}
+
+@media (min-width: 768px) {
+  #icon_tel {
+    margin: 15px 0px 0px 0px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  #icon_tel {
+    margin: 15px 0px 0px 0px;
+    width: 55px;
+    height: 55px;
+  }
+}
+
+#info_bot_dis {
+  font-size: 12px;
+  color: var(--bs-white);
+  text-align: center;
+}
+
+#col_recent_incidents {
+  width: 100%;
+  height: 100%;
+}
+
+#info_bot_dis_p {
+  margin: 3px;
+  font-size: 12px;
+}
+
+@media (min-width: 768px) {
+  #info_bot_dis_p {
+    margin: 3px;
+    font-size: 14px;
+  }
+}
+
+#img_recent_incidents {
+  margin: 10px 0px 0px 0px;
+  width: 45px;
+  height: 45px;
+}
+
+@media (min-width: 768px) {
+  #img_recent_incidents {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  #img_recent_incidents {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+#p_recent_incidents {
+  margin: 3px;
+  text-align: center;
+  color: var(--bs-gray-100);
+  font-size: 12px;
+}
+
+@media (min-width: 768px) {
+  #p_recent_incidents {
+    margin: 3px;
+    text-align: center;
+    color: var(--bs-gray-100);
+    font-size: 14px;
+  }
+}
