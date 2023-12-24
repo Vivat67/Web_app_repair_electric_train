@@ -17,6 +17,19 @@
   }
 }
 
+#conteiner_nav_bar {
+  padding-bottom: 50px;
+}
+
+#conteiner_nav_bar_reg {
+  padding-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+  #conteiner_nav_bar_reg {
+    padding-bottom: 0px;
+  }
+}
 
 #content {
   margin: 20px;
@@ -65,4 +78,8 @@
   color: #ffffff;
   margin: 20px;
   max-width: 1000px;
+}
+
+.field {
+  padding-bottom: 10px;
 }

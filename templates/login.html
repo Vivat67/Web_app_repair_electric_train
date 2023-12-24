@@ -17,54 +17,53 @@
     {{ toastr.message() }}
 </head>
 
-<body>
+<body id="main_log_reg">
     {{ toastr.include_toastr_js() }}
-    <section class="d-flex flex-column justify-content-between main" id="main_log_reg" style="min-width: 220px;">
-        <div class="col" id="conteiner_nav_bar">
-            <nav class="navbar navbar-dark navbar-expand-md py-3" id="nav_top">
-                <div class="container"><a class="navbar-brand d-flex align-items-center"
-                        href="{{ url_for('index') }}"><span id="logo"></span></a><button data-bs-toggle="collapse"
-                        class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
-                            navigation</span><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navcol-1">
-                        <ul class="navbar-nav text-end ms-auto" id="center_nav">
-                            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Главная</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Статистика</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav text-end ms-auto" id="right_nav">
-                            {% if not current_user.is_authenticated %}
-                            <li class="nav-item right"><a class="nav-link active"
-                                    href="{{ url_for('login') }}">Войти</a>
-                            </li>
-                            <li class="nav-item right"><a class="nav-link"
-                                    href="{{ url_for('registration') }}">Регистрация</a></li>
-                            {% else %}
-                            <li class="nav-item right"><a class="nav-link active">{{ current_user.surname }} {{
-                                    current_user.name }}</a>
-                            </li>
-                            <li class="nav-item right"><a class="nav-link" href="{{ url_for('logout') }}">Выйти</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
+    <div class="col" id="conteiner_nav_bar">
+        <nav class="navbar navbar-dark navbar-expand-md py-3" id="nav_top">
+            <div class="container"><a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}"><span
+                        id="logo"></span></a><button data-bs-toggle="collapse" class="navbar-toggler"
+                    data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
+                        navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav text-end ms-auto" id="center_nav">
+                        <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Главная</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Статистика</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav text-end ms-auto" id="right_nav">
+                        {% if not current_user.is_authenticated %}
+                        <li class="nav-item right"><a class="nav-link active" href="{{ url_for('login') }}">Войти</a>
+                        </li>
+                        <li class="nav-item right"><a class="nav-link"
+                                href="{{ url_for('registration') }}">Регистрация</a></li>
+                        {% else %}
+                        <li class="nav-item right"><a class="nav-link active">{{ current_user.surname }} {{
+                                current_user.name }}</a>
+                        </li>
+                        <li class="nav-item right"><a class="nav-link" href="{{ url_for('logout') }}">Выйти</a></li>
+                        {% endif %}
+                    </ul>
                 </div>
-            </nav>
-        </div>
-        <div class="col d-flex align-self-center register" id="content">
-            <div class="row">
-                <p class="h1 text-center mt-5 color=white">Авторизация</p>
+            </div>
+        </nav>
+    </div>
+    <div class="container mt-5 register">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <p class=" h1 text-center mt-5 color=white">Авторизация</p><br>
                 <form method="post">
-                    <div class="mb-3">
+                    <div class="mb-3 field">
                         <label for="Name" class="form-label">Имя: </label>
                         <input type="text" class="form-control" id="Name" name="name">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 field">
                         <label for="Surname" class="form-label">Фамилия: </label>
                         <input type="text" class="form-control" id="Surname" name="surname">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 field">
                         <label for="Password1" class="form-label">Пароль: </label>
                         <input type="password" class="form-control" id="Password1" name="password">
                     </div>
@@ -74,7 +73,7 @@
                 </form>
             </div>
         </div>
-    </section>
+    </div>
     <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
