@@ -12,6 +12,7 @@
     <link rel="stylesheet"
         href="{{ url_for('static', filename='assets/css/content_page-Navbar-With-Button-icons.css') }}"">
     <link rel=" stylesheet" href="{{ url_for('static', filename='assets/css/content_page_styles.css') }}">
+    <link rel=" stylesheet" href="{{ url_for('static', filename='assets/css/btn_styles.css') }}">
     {{ toastr.include_jquery() }}
     {{ toastr.include_toastr_css() }}
     {{ toastr.message() }}
@@ -55,7 +56,12 @@
         </div>
         <div class="col d-flex align-self-center repair_information">
             <div class="row">
-                <p class="h1 text-center mt-5 color=white">Информация о ремонте</p>
+                <div class="col-md-12 text-center">
+                    <a href="#" class="btn_ef btn-lg">
+                        <span>История ремонта</span>
+                    </a>
+                </div>
+                <p class="h1 text-center mt-5 color=white">Запись неисправности</p><br>
                 <form method="post">
                     <div class="mb-3">
                         <label for="Name" class="form-label">Имя: </label>
@@ -89,13 +95,13 @@
                         <label for="SubDefect" class="form-label">Дополнительная информация по неисправности:
                         </label>
                         <textarea class="form-control" id="SubDefect" rows="3"
-                            aria-placeholder="Уточните что именно произошло" name="sub_defect"></textarea>
+                            placeholder="Уточните что именно произошло" name="sub_defect"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="brief_information" class="form-label">Устранение неисправности:
                         </label>
                         <textarea class="form-control" id="brief_information" rows="5"
-                            aria-placeholder="Какой ремонт был произведен" name="brief_information"></textarea>
+                            placeholder="Какой ремонт был произведен" name="brief_information"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="Date" class="form-label">Дата: </label>
@@ -125,7 +131,8 @@
                         style="margin: 10px 0px 0px 0px;">
                         <p class="footer_center_text"><a class="nav-link active"
                                 href="{{ url_for('index') }}">Главная</a></p>
-                        <p class="footer_center_text"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a></p>
+                        <p class="footer_center_text"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a>
+                        </p>
                         <p class="footer_center_text"><a class="nav-link" href="{{ url_for('index') }}">Статистика</a>
                         </p>
                     </div>

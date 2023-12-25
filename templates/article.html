@@ -52,7 +52,7 @@
         <div style="color: rgb(255, 255,255)" class="col align-self-center" id="content">
             <h1 class="text-center">{{ article.title }}</h1>
             <br>
-            <p>{{ article.content }}</p>
+            <p>{{ article.content|safe }}</p>
         </div>
         <div class="col d-flex flex-row align-items-end" id="footer"
             style="/*font-size: 14px;*//*color: #ffffff;*//*font-family: Montserrat, sans-serif;*/border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">

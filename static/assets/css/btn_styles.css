@@ -1,0 +1,48 @@
+.btn_ef {
+    color: #313133;
+    background: linear-gradient(90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100%);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    margin: 0 15px;
+    border: none;
+    border-radius: 50px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.btn_ef:focus,
+.btn_ef:hover {
+    color: #313133;
+    background: linear-gradient(90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100%);
+    transform: translateY(-6px);
+}
+
+.btn_ef:before {
+    content: '';
+    min-width: calc(100% + 17px);
+    min-height: calc(100% + 17px);
+    border-radius: 50px;
+    border: 5px solid #00FFCB;
+    box-shadow: 0 0 40px rgba(0, 255, 203, .7);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%) scale(0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: all .3s ease-in-out 0s;
+}
+
+.btn_ef:hover:before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) scale(1);
+}
+
+@media only screen and (max-width: 767px) {
+    .btn_ef {
+        margin-bottom: 30px;
+    }
+}
