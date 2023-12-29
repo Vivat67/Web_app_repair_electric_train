@@ -3,7 +3,7 @@ from flask_login import login_required, login_user, logout_user
 
 
 from main import app, db
-from models import Users, Articles, Repair_information
+from models import Users, Articles, Repair_information, Train
 
 
 @app.route('/')
@@ -101,8 +101,9 @@ def redirect_to_sign(response):
 @app.route('/repair_information', methods=['GET', 'POST'])
 @login_required
 def repair_information():
+    trains = Train.query.filter_by(location='Смоленск').all()
     if request.method == 'GET':
-        return render_template('repair_inf.html')
+        return render_template('repair_inf.html', trains=trains)
     name = request.form.get('name')
     surname = request.form.get('surname')
     train = request.form.get('train')
@@ -121,12 +122,35 @@ def repair_information():
             )
         db.session.add(new_repair_information)
         db.session.commit()
-        return redirect(url_for('index')), flash(
+        flash(
                                 {'title': "Успех",
                                  'message': "Запись добавлена"}, 'success'
                                  )
+        return render_template('repair_inf.html', trains=trains)
     else:
         flash(
                 {'title': "Ошибка",
                     'message': "Заполните все поля"}, 'error')
-    return render_template('repair_inf.html')
+        return render_template('repair_inf.html', trains=trains)
+
+
+@app.route('/repair_history', methods=['GET', 'POST'])
+@login_required
+def repair_history():
+    trains = Train.query.all()
+    return render_template('repair_history.html', trains=trains)
+
+
+@app.route('/repair_history_continion', methods=['GET', 'POST'])
+@login_required
+def repair_history_continion():
+    train = request.form['train']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+
+    if start_date and end_date:
+        repair_inf = Repair_information.query.filter_by(train=train).filter(Repair_information.date.between(start_date, end_date)).all()
+    else:
+        repair_inf = Repair_information.query.filter_by(train=train).all()
+
+    return render_template('repair_history_continion.html', repair_inf=repair_inf)

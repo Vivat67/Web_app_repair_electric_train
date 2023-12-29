@@ -51,15 +51,11 @@ class Defects(db.Model):
 
 class Repair_information(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    executer = db.Column(db.String(32), unique=True)
+    executer = db.Column(db.String(32))
     defect = db.Column(db.String(64))
-    subspecies_defect = db.Column(db.String(100))
+    subspecies_defect = db.Column(db.Text)
     brief_information = db.Column(db.Text)
-    train_id = db.Column(db.Integer, db.ForeignKey('train.id'))
-    train = db.relationship('Train',
-                            backref=db.backref(
-                                'repair_information', lazy=True))
-
+    train = db.Column(db.String(20))
     date = db.Column(db.Date)
 
     def __repr__(self):

@@ -54,69 +54,37 @@
                 </div>
             </nav>
         </div>
-        <div class="col d-flex align-self-center repair_information">
+        <div class="container mt-5 text-white">
+            <h2 class="text-center">Сведенья</h2><br><br>
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <a href="{{ url_for('repair_history') }}" class="btn_ef btn-lg">
-                        <span>История ремонта</span>
-                    </a>
-                </div>
-                <p class="h1 text-center mt-5 color=white">Запись неисправности</p><br>
-                <form method="post">
-                    <div class="mb-3">
-                        <label for="Name" class="form-label">Имя: </label>
-                        <input type="text" class="form-control" id="Name" value="{{ current_user.name }}" name="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Surname" class="form-label">Фамилия: </label>
-                        <input type="text" class="form-control" id="Surname" value="{{ current_user.surname }}"
-                            name="surname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="train_id">Поезд:</label>
-                        <select class="form-select" id="train_id" name="train">
-                            {% for train in trains %}
-                            <option value="{{ train.train }}">{{ train.train }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Defect" class="form-label">Неисправность: </label>
-                        <select class="form-select" id="Defect" name="defect">
-                            <option value="Токоприемники">Токоприемники</option>
-                            <option value="Цепи ВВ">Цепи ВВ</option>
-                            <option value="Движение поезда">Движение поезда</option>
-                            <option value="Запуск АРФ">Запуск АРФ</option>
-                            <option value="ДНТ">ДНТ</option>
-                            <option value="ДК">ДК</option>
-                            <option value="Зарядный агрегат">Зарядный агрегат</option>
-                            <option value="Вспомогательные цепи">Вспомогательные цепи</option>
-                            <option value="Силовые цепи">Силовые цепи</option>
-                            <option value="Реостатный тормоз">Реостатный тормоз</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="SubDefect" class="form-label">Дополнительная информация по неисправности:
-                        </label>
-                        <textarea class="form-control" id="SubDefect" rows="3"
-                            placeholder="Уточните что именно произошло" name="sub_defect"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="brief_information" class="form-label">Устранение неисправности:
-                        </label>
-                        <textarea class="form-control" id="brief_information" rows="5"
-                            placeholder="Какой ремонт был произведен" name="brief_information"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="Date" class="form-label">Дата: </label>
-                        <input type="date" class="form-control" id="Date" name="date">
-                    </div>
-                    <button type="submit" class="btn btn-danger text-center">
-                        Добавить запись
-                    </button>
-                </form>
+                {% for i in repair_inf %}
+                <p>
+                    Поезд: {{ i.train }}
+                </p>
+                <p>
+                    Исполнитель: {{ i.executer }}
+                </p>
+                <p>
+                    Неисправность: {{ i.defect }}
+                </p>
+                <p>
+                    Дополнительная информация:
+                </p>
+                <p>
+                    {{ i.subspecies_defect }}
+                </p>
+                <p>
+                    Устранение:
+                </p>
+                <p>
+                    {{ i.subspecies_defect }}
+                </p>
+                <p class="border-bottom">
+                    Дата: {{ i.date.strftime('%d-%m-%Y') }}
+                </p>
+
+                {% endfor %}
             </div>
-            <br>
         </div>
         <div class="col d-flex flex-row align-items-end" id="footer"
             style="/*font-size: 14px;*//*color: #ffffff;*//*font-family: Montserrat, sans-serif;*/border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">
