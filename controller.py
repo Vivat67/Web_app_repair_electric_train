@@ -153,4 +153,7 @@ def repair_history_continion():
     else:
         repair_inf = Repair_information.query.filter_by(train=train).all()
 
-    return render_template('repair_history_continion.html', repair_inf=repair_inf)
+    return render_template(
+        'repair_history_continion.html',
+        repair_inf=repair_inf
+        )

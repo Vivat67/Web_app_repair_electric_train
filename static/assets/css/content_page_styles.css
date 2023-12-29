@@ -1,6 +1,12 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 #main {
   width: 100%;
   min-height: 100vh;
+  flex-grow: 1;
 }
 
 #main_log_reg {
