@@ -22,7 +22,7 @@
     {{ toastr.include_toastr_js() }}
     <section class="d-flex flex-column justify-content-between main" id="main"
         style="min-width: 220px;background: #2E3033;">
-        <div class="col" id="conteiner_nav_bar">
+        <div class="col">
             <nav class="navbar navbar-dark navbar-expand-md py-3" id="nav_top">
                 <div class="container"><a class="navbar-brand d-flex align-items-center"
                         href="{{ url_for('index') }}"><span id="logo"></span></a><button data-bs-toggle="collapse"
@@ -54,40 +54,32 @@
                 </div>
             </nav>
         </div>
-        <div class="container mt-5 text-white">
-            <h2 class="text-center">Сведенья</h2><br><br>
-            <div class="col-8 mx-auto">
-                {% for i in repair_inf %}
-                <p>
-                    Поезд: {{ i.train }}
-                </p>
-                <p>
-                    Исполнитель: {{ i.executer }}
-                </p>
-                <p>
-                    Неисправность: {{ i.defect }}
-                </p>
-                <p>
-                    Дополнительная информация:
-                </p>
-                <p>
-                    {{ i.subspecies_defect }}
-                </p>
-                <p>
-                    Устранение:
-                </p>
-                <p>
-                    {{ i.brief_information }}
-                </p>
-                <p class="border-bottom">
-                    Дата: {{ i.date.strftime('%d-%m-%Y') }}
-                </p>
-
-                {% endfor %}
+        <div class="container text-white">
+            <div class="col-6 mx-auto justify-content-center">
+                <h2 class="text-center">История ремонта</h2><br><br>
+                <form action="{{ url_for('repair_history_continion') }}" method="post">
+                    <div class="mb-3">
+                        <label for="train_id">Поезд:</label>
+                        <select class="form-select" id="train_id" name="train">
+                            {% for train in trains %}
+                            <option value="{{ train.train }}">{{ train.train }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start_date">Начало периода:</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="end_date">Конец периода:</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date">
+                    </div>
+                    <button type="submit" class="btn btn-danger">Отправить</button>
+                </form>
             </div>
         </div>
         <div class="col d-flex flex-row align-items-end" id="footer"
-            style="/*font-size: 14px;*//*color: #ffffff;*//*font-family: Montserrat, sans-serif;*/border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">
+            style="border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">
             <div class="container d-flex justify-content-evenly" id="footer_main_conteiner">
                 <div class="row d-flex flex-column" id="footer_left_row"><a class="nav-link"
                         href="{{ url_for('repair_information') }}">

@@ -157,3 +157,20 @@ def repair_history_continion():
         'repair_history_continion.html',
         repair_inf=repair_inf
         )
+
+@app.route('/diagnostik/')
+@login_required
+def diagnostik():
+    train = request.form['train']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+
+    if start_date and end_date:
+        repair_inf = Repair_information.query.filter_by(train=train).filter(Repair_information.date.between(start_date, end_date)).all()
+    else:
+        repair_inf = Repair_information.query.filter_by(train=train).all()
+
+    return render_template(
+        'repair_history_continion.html',
+        repair_inf=repair_inf
+        )

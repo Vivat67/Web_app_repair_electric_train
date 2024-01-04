@@ -38,7 +38,7 @@ class Train(db.Model):
 
 class Defects(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    defect = db.Column(db.String(64), unique=True)
+    defect = db.Column(db.String(64))
     subspecies_defect = db.Column(db.String(100))
     repair = db.Column(db.Text)
 
