@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Статьи</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap">
+    <link rel="stylesheet"
+        href="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css">
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='assets/css/content_page-Navbar-With-Button-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/diagnostics.style.css') }}">
+    <link rel=" stylesheet" href="{{ url_for('static', filename='assets/css/content_page_styles.css') }}">
+</head>
+
+<body>
+    <section class="d-flex flex-column main" id="main" style="min-width: 220px;background: #2E3033;">
+        <div class="col" id="conteiner_nav_bar">
+            <nav class="navbar navbar-dark navbar-expand-md py-3" id="nav_top">
+                <div class="container"><a class="navbar-brand d-flex align-items-center"
+                        href="{{ url_for('index') }}"><span id="logo"></span></a><button data-bs-toggle="collapse"
+                        class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
+                            navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="navbar-nav text-end ms-auto" id="center_nav">
+                            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Главная</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Статистика</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav text-end ms-auto" id="right_nav">
+                            {% if not current_user.is_authenticated %}
+                            <li class="nav-item right"><a class="nav-link active"
+                                    href="{{ url_for('login') }}">Войти</a>
+                            </li>
+                            <li class="nav-item right"><a class="nav-link"
+                                    href="{{ url_for('registration') }}">Регистрация</a></li>
+                            {% else %}
+                            <li class="nav-item right"><a class="nav-link active">{{ current_user.surname }} {{
+                                    current_user.name }}</a>
+                            </li>
+                            <li class="nav-item right"><a class="nav-link" href="{{ url_for('logout') }}">Выйти</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container main_di text-white">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-12 text-center">
+                    <h2>Не поднимаются токоприемники по всему поезду</h2>
+                </div>
+            </div>
+            <div class=" row justify-content-center">
+                <div class="col-lg-8 col-12">
+                    <h3>Не подается напряжение на 25-ый провод</h3>
+                    <ul>
+                        <li class="di_li">Проверить ПР25 постановкой главной ручки контроллера машиниста - КМ в
+                            маневровое положение -
+                            «М»
+                            по
+                            загоранию сигнальной лампы «ЛК».</li>
+                        <li class="di_li">Проверить состояние кнопки Кн1 «Токоприемник поднят».</li>
+                        <li class="di_li">Кратковременно подать напряжение перемычкой на 25-ый провод от любого
+                            15-го провода
+                            защищенного
+                            предохранителем (15-й провод с буквенной индикацией) из МВ.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-12">
+                    <h3>Обрыв 25-го провода между головным и моторным вагоном</h3>
+                    <ul>
+                        <li class="di_li">В шкафу с РУМ первого моторного вагона кратковременно подать напряжение
+                            перемычкой на 25-ый
+                            провод от любого 15-го провода защищенного предохранителем (15-й провод с буквенной
+                            индикацией).
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-12">
+                    <h3>Наличие «-» на26-ом проводе, при этом по всему поезду дуют вентили КЛП-О</h3>
+                    <ul>
+                        <li class="di_li">Отключилось РББ на одном из моторных вагонов (горит ЛСРББ). Проверить
+                            закрытие всех ящиков с
+                            подвагонным оборудованием, блокировки лестниц для подъема на крышу, закрытие шкафов с
+                            высоковольтным вводом. При необходимости перемычкой 15БА-30 можно подать «-» на РББ.
+                        </li class="di_li">
+                        <li class="di_li">Сработало реле ПТРС, на пульте горит светодиод «Пожароопасно». Проверить
+                            вагон на наличие
+                            возгорания, нажать кнопку «Выключение ПТРС» (шкафы с РУМ и КМК), осмотреть реле на
+                            возможное
+                            залипание или подгар контактов.
+                        </li>
+                        <li class="di_li">Если причина не обнаружена, то действовать нужно быстро и оперативно, так
+                            как постоянное
+                            дутье
+                            вентилей КЛП-0 приводит к быстрой потере воздуха. После остановки поезда в середине
+                            поезда
+                            снять
+                            26-ой провод с клеммной рейки и изолировать его, определить неисправную половину поезда
+                            по
+                            загоранию светодиода реле РППВВ1 в шкафу с РУМ.</li>
+                        <li class="di_li">Если неисправна хвостовая часть поезда, то на ней перекрыть кран от НМ,
+                            выключить РУМ и
+                            следовать на головной части обычным порядком.</li>
+                        <li class="di_li">Если неисправна головная часть поезда, то на ней поставить 3-х ходовые
+                            краны токоприемников
+                            в
+                            положение «на ручное», выключить РУМ, а в хвостовой части поставить перемычку 6-26 или
+                            19-26.
+                            Для опускания токоприемников в хвостовой части применяют кнопки Кн8 «Блинкеры» или Кн9
+                            «Отключение ВВ».</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col d-flex flex-row align-items-end" id="footer"
+            style="/*font-size: 14px;*//*color: #ffffff;*//*font-family: Montserrat, sans-serif;*/border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">
+            <div class="container d-flex justify-content-evenly" id="footer_main_conteiner">
+                <div class="row d-flex flex-column" id="footer_left_row"><a class="nav-link"
+                        href="{{ url_for('repair_information') }}">
+                        <div class="col d-flex justify-content-center align-items-center" id="footer_img_col"><img
+                                width="45px" height="45px" src="static/assets/img/mechanic-tools_v2.png"></div>
+                        <div class="col d-flex justify-content-center align-items-center" id="footer_par_col">
+                            <p style="text-align: center;">Сведенья ремонта</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="row" id="footer_center_row">
+                    <div class="col d-flex flex-column justify-content-evenly" id="footer_center_col_menu"
+                        style="margin: 10px 0px 0px 0px;">
+                        <p class="footer_center_text"><a class="nav-link active"
+                                href="{{ url_for('index') }}">Главная</a></p>
+                        <p class="footer_center_text"><a class="nav-link" href="{{ url_for('content') }}">Статьи</a>
+                        </p>
+                        <p class="footer_center_text"><a class="nav-link" href="{{ url_for('index') }}">Статистика</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row d-flex flex-column" id="footer_right_row"><a class="nav-link"
+                        href="https://web.telegram.org/a/#6211235689">
+                        <div class="col d-flex justify-content-center align-items-center" id="footer_img_col-1"><img
+                                width="45px" height="45px" src="static/assets/img/send_5801504.png"></div>
+                        <div class="col d-flex justify-content-center align-items-center" id="footer_par_col-1">
+                            <p style="text-align: center;font-size: 14px;">&nbsp;Шкафы ЭД-9М</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.js"></script>
+</body>
+
+</html>
