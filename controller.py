@@ -3,7 +3,7 @@ from flask_login import login_required, login_user, logout_user
 
 
 from main import app, db
-from models import Users, Articles, Repair_information, Train
+from models import Users, Articles, Repair_information, Train, Defects
 
 
 @app.route('/')
@@ -159,9 +159,15 @@ def repair_history_continion():
         )
 
 
-@app.route('/diagnostics/')
+@app.route('/diagnostics/<defect>')
 @login_required
-def diagnostics():
-    return render_template(
-        'diagnostics.html'
-        )
+def diagnostics(defect):
+    all_defect = Defects.query.filter_by(defect=defect).all()
+    return render_template('diagnostics.html', all_defect=all_defect)
+
+
+@app.route('/sub_defect/<int:sub_id>')
+@login_required
+def diagnostics_sub_defect(sub_id):
+    sub_defect = Defects.query.filter_by(id=sub_id).first()
+    return render_template('sub_defect.html', sub_defect=sub_defect)
