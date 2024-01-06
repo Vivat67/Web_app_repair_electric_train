@@ -2,7 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_toastr import Toastr
-from flask_migrate import Migrate
 
 import os
 from dotenv import load_dotenv
@@ -13,7 +12,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 db = SQLAlchemy(app)
 manager = LoginManager(app)
-migrate = Migrate(app, db)
+
 
 toastr = Toastr(app)
 

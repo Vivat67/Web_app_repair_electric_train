@@ -9,7 +9,7 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     surname = db.Column(db.String(32))
-    password = db.Column(db.String(64))
+    password = db.Column(db.String(100))
     post = db.Column(db.String(32))
 
     def __repr__(self):
