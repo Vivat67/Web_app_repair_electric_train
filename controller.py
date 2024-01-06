@@ -1,9 +1,11 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, logout_user
 
 
-from main import app, db
-from models import Users, Articles, Repair_information, Train, Defects
+from main import app
+from models import DataAccess
+
+dataAccess = DataAccess()
 
 
 @app.route('/')
@@ -14,14 +16,14 @@ def index():
 @app.route('/articles')
 @login_required
 def content():
-    articles = Articles.query.all()
+    articles = dataAccess.get_articles()
     return render_template('articles.html', articles=articles)
 
 
 @app.route('/article/<int:article_id>')
 @login_required
 def article(article_id):
-    article = Articles.query.filter_by(id=article_id).first()
+    article = dataAccess.get_article(article_id)
     return render_template('article.html', article=article)
 
 
@@ -43,14 +45,7 @@ def registration():
             {'title': "Ошибка",
                 'message': "Пароли не совпадают"}, 'error')
     else:
-        new_user = Users(
-            name=name,
-            surname=surname,
-            password=password,
-            post=post
-            )
-        db.session.add(new_user)
-        db.session.commit()
+        dataAccess.add_user(name, surname, password, post)
         return redirect(url_for('login')), flash(
                                 {'title': "Успех",
                                  'message': "Вы зарегестрировались"}, 'success'
@@ -66,11 +61,7 @@ def login():
         surname = request.form.get('surname')
         password = request.form.get('password')
         if name and password and surname:
-            user = Users.query.filter_by(name=name, surname=surname).first()
-
-            if user and user.password == password:
-                login_user(user)
-
+            if dataAccess.get_user(name, surname, password):
                 next_page = request.args.get('next')
                 return redirect(next_page or url_for('index'))
             else:
@@ -84,7 +75,7 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/logout', methods=['GET', 'POST'])
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -101,7 +92,7 @@ def redirect_to_sign(response):
 @app.route('/repair_information', methods=['GET', 'POST'])
 @login_required
 def repair_information():
-    trains = Train.query.filter_by(location='Смоленск').all()
+    trains = dataAccess.get_trains()
     if request.method == 'GET':
         return render_template('repair_inf.html', trains=trains)
     name = request.form.get('name')
@@ -112,16 +103,8 @@ def repair_information():
     b_inf = request.form.get('brief_information')
     date = request.form.get('date')
     if name and surname and train and defect and s_def and b_inf and date:
-        new_repair_information = Repair_information(
-            executer=name + ' ' + surname,
-            train=train,
-            defect=defect,
-            subspecies_defect=s_def,
-            brief_information=b_inf,
-            date=date
-            )
-        db.session.add(new_repair_information)
-        db.session.commit()
+        dataAccess.add_repair_inf(name, surname, train,
+                                  defect, s_def, b_inf, date)
         flash(
                                 {'title': "Успех",
                                  'message': "Запись добавлена"}, 'success'
@@ -137,7 +120,7 @@ def repair_information():
 @app.route('/repair_history', methods=['GET', 'POST'])
 @login_required
 def repair_history():
-    trains = Train.query.all()
+    trains = dataAccess.get_trains()
     return render_template('repair_history.html', trains=trains)
 
 
@@ -149,9 +132,10 @@ def repair_history_continion():
     end_date = request.form['end_date']
 
     if start_date and end_date:
-        repair_inf = Repair_information.query.filter_by(train=train).filter(Repair_information.date.between(start_date, end_date)).all()
+        repair_inf = dataAccess.get_repair_inf_with_date(
+            train, start_date, end_date)
     else:
-        repair_inf = Repair_information.query.filter_by(train=train).all()
+        repair_inf = dataAccess.get_repair_inf(train)
 
     return render_template(
         'repair_history_continion.html',
@@ -162,12 +146,12 @@ def repair_history_continion():
 @app.route('/diagnostics/<defect>')
 @login_required
 def diagnostics(defect):
-    all_defect = Defects.query.filter_by(defect=defect).all()
-    return render_template('diagnostics.html', all_defect=all_defect)
+    all_sub_defects = dataAccess.get_all_sub_defets(defect)
+    return render_template('diagnostics.html', all_sub_defects=all_sub_defects)
 
 
 @app.route('/sub_defect/<int:sub_id>')
 @login_required
 def diagnostics_sub_defect(sub_id):
-    sub_defect = Defects.query.filter_by(id=sub_id).first()
+    sub_defect = dataAccess.get_sub_defet(sub_id)
     return render_template('sub_defect.html', sub_defect=sub_defect)

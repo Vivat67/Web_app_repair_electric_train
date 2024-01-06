@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>{{ all_defect[0].defect }}</title>
+    <title>{{ all_sub_defects[0].defect }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&amp;display=swap">
     <link rel="stylesheet"
@@ -49,10 +49,10 @@
             </nav>
         </div>
         <div class="container mt-10 d-flex flex-column">
-            <h1 class="text-center" style=" color: aliceblue;">{{ all_defect[0].defect }}</h1>
+            <h1 class="text-center" style=" color: aliceblue;">{{ all_sub_defects[0].defect }}</h1>
             <br><br>
             <ul class="list-group list-inline mx-auto justify-content-center">
-                {% for sub in all_defect %}
+                {% for sub in all_sub_defects %}
                 <li class="fs-4">
                     <a class="text-white lh-lg link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('diagnostics_sub_defect', sub_id=sub.id) }}">{{
