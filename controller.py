@@ -1,3 +1,7 @@
+"""
+Модуль содержит функции представления для шаблонов.
+"""
+
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, logout_user
 
@@ -5,30 +9,60 @@ from flask_login import login_required, logout_user
 from main import app
 from models import DataAccess
 
+# обьект для взаимодействия с базой данных.
 dataAccess = DataAccess()
 
 
 @app.route('/')
 def index():
+    """
+    Обработчик для главной страницы.
+
+    Returns:
+        str: HTML-код главной страницы.
+    """
     return render_template('index.html')
 
 
 @app.route('/articles')
 @login_required
 def content():
+    """
+    Обработчик для страницы со списком статей.
+
+    Returns:
+        str: HTML-код страницы со списком статей.
+    """
     articles = dataAccess.get_articles()
     return render_template('articles.html', articles=articles)
 
 
 @app.route('/article/<int:article_id>')
 @login_required
-def article(article_id):
+def article(article_id: int) -> object:
+    """
+    Обработчик для страницы со списком статей.
+
+    Args:
+        article_id (int): идентификатор статьи.
+
+    Returns:
+        str: HTML-код страницы со списком статей.
+        articles: обьект статьи.
+    """
     article = dataAccess.get_article(article_id)
     return render_template('article.html', article=article)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
+    """
+    Обработчик для страницы регистрации пользователей.
+    При удачной регистрации перенаправляет на авторизацию.
+
+    Returns:
+        str: HTML-код страницы регистрации.
+    """
     if request.method == 'GET':
         return render_template('register.html')
     name = request.form.get('name')
@@ -56,6 +90,12 @@ def registration():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Обработчик для страницы входа в систему.
+
+    Returns:
+        str: HTML-код страницы входа в систему.
+    """
     if request.method == 'POST':
         name = request.form.get('name')
         surname = request.form.get('surname')
@@ -78,12 +118,27 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    """
+    Обработчик для выхода пользователя из системы.
+
+    Returns:
+        str: Перенаправление на главную страницу.
+    """
     logout_user()
     return redirect(url_for('index'))
 
 
 @app.after_request
 def redirect_to_sign(response):
+    """
+    Перенаправление на страницу входа в систему при отказе в доступе.
+
+    Args:
+        response: Ответ сервера.
+
+    Returns:
+        str: Перенаправление на страницу входа в систему при отказе в доступе.
+    """
     if response.status_code == 401:
         return redirect(url_for('login') + '?next=' + request.url)
     return response
@@ -92,6 +147,13 @@ def redirect_to_sign(response):
 @app.route('/repair_information', methods=['GET', 'POST'])
 @login_required
 def repair_information():
+    """
+    Обработчик для страницы информации о ремонтах.
+
+    Returns:
+        str: HTML-код страницы информации о ремонтах.
+        trains: список обьектов поездов.
+    """
     trains = dataAccess.get_trains()
     if request.method == 'GET':
         return render_template('repair_inf.html', trains=trains)
@@ -120,6 +182,13 @@ def repair_information():
 @app.route('/repair_history', methods=['GET', 'POST'])
 @login_required
 def repair_history():
+    """
+    Обработчик для страницы истории ремонтов.
+
+    Returns:
+        str: HTML-код страницы истории ремонтов.
+        trains: список обьектов поездов.
+    """
     trains = dataAccess.get_trains()
     return render_template('repair_history.html', trains=trains)
 
@@ -127,6 +196,13 @@ def repair_history():
 @app.route('/repair_history_continion', methods=['GET', 'POST'])
 @login_required
 def repair_history_continion():
+    """
+    Обработчик для страницы фильтрации истории ремонтов.
+
+    Returns:
+        str: HTML-код страницы фильтрации истории ремонтов.
+        repair_inf: список обьектов истории ремонта поездов.
+    """
     train = request.form['train']
     start_date = request.form['start_date']
     end_date = request.form['end_date']
@@ -145,7 +221,17 @@ def repair_history_continion():
 
 @app.route('/diagnostics/<defect>')
 @login_required
-def diagnostics(defect):
+def diagnostics(defect: str):
+    """
+    Обработчик для страницы диагностики.
+
+    Args:
+        defect (str): Неисправность.
+
+    Returns:
+        str: HTML-код страницы диагностики.
+        all_sub_defects: список обьектов неисправностей.
+    """
     all_sub_defects = dataAccess.get_all_sub_defets(defect)
     return render_template('diagnostics.html', all_sub_defects=all_sub_defects)
 
@@ -153,5 +239,15 @@ def diagnostics(defect):
 @app.route('/sub_defect/<int:sub_id>')
 @login_required
 def diagnostics_sub_defect(sub_id):
+    """
+    Обработчик для страницы подробной информации о разновидности неисправности.
+
+    Args:
+        sub_id (int): идентификатор разновидности неисправности.
+
+    Returns:
+        str: HTML-код страницы подробной информации о разновидности неисправности.
+        sub_defect: обьект описания неисправности.
+    """
     sub_defect = dataAccess.get_sub_defet(sub_id)
     return render_template('sub_defect.html', sub_defect=sub_defect)
