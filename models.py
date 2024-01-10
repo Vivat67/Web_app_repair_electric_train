@@ -1,3 +1,7 @@
+"""
+В данном модуле создаются метаданные для БД.
+"""
+
 from flask_login import UserMixin
 from main import app, manager, db
 from flask_migrate import Migrate
@@ -8,6 +12,9 @@ migrate = Migrate(app, db)
 
 
 class Users(db.Model, UserMixin):
+    """
+    Табличка 'Пользователь'
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     surname = db.Column(db.String(32))
@@ -24,6 +31,9 @@ class Users(db.Model, UserMixin):
 
 
 class Train(db.Model):
+    """
+    Табличка 'Поезд'
+    """
     id = db.Column(db.Integer, primary_key=True)
     train = db.Column(db.String(32), unique=True)
     location = db.Column(db.String(32))
@@ -39,6 +49,9 @@ class Train(db.Model):
 
 
 class Defects(db.Model):
+    """
+    Табличка 'Неисправности'
+    """
     id = db.Column(db.Integer, primary_key=True)
     defect = db.Column(db.String(64))
     subspecies_defect = db.Column(db.String(100))
@@ -52,6 +65,9 @@ class Defects(db.Model):
 
 
 class Repair_information(db.Model):
+    """
+    Табличка 'Информация ремонта'
+    """
     id = db.Column(db.Integer, primary_key=True)
     executer = db.Column(db.String(32))
     defect = db.Column(db.String(64))
@@ -71,6 +87,9 @@ class Repair_information(db.Model):
 
 
 class Articles(db.Model):
+    """
+    Табличка 'Статьи'
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
     content = db.Column(db.Text)
@@ -84,15 +103,43 @@ class DataAccess:
     Класс служит для извлечения данных из БД.
     """
 
-    def get_articles(self):
+    def get_articles(self) -> list:
+        """
+        Получение списка всех статей из базы данных.
+
+        Returns:
+            articles: список объектов статей.
+        """
         articles = Articles.query.all()
         return articles
 
-    def get_article(self, article_id):
+    def get_article(self, article_id: int) -> object:
+        """
+        Получение статьи из базы данных по ее идентификатору.
+
+        Args:
+            article_id (int): идентификатор статьи.
+
+        Returns:
+            article: объект статьи.
+        """
         article = Articles.query.filter_by(id=article_id).first()
         return article
 
-    def add_user(self, name, surname, password, post):
+    def add_user(self,
+                 name: str,
+                 surname: str,
+                 password: str,
+                 post: str) -> None:
+        """
+        Добавление нового пользователя в базу данных.
+
+        Args:
+            name (str): Имя пользователя.
+            surname (str): Фамилия пользователя.
+            password (str): Нехешированный пароль пользователя.
+            post (str): Должность пользователя.
+        """
         new_user = Users(
             name=name,
             surname=surname,
@@ -102,26 +149,56 @@ class DataAccess:
         db.session.add(new_user)
         db.session.commit()
 
-    def get_user(self, name, surname, password):
+    def get_user(self, name: str, surname: str, password: str) -> bool | None:
+        """
+        Получение пользователя из базы данных и проверка введенного пароля.
+
+        Args:
+            name (str): имя пользователя.
+            surname (str): фамилия пользователя.
+            password (str): пароль пользователя.
+
+        Returns:
+            bool: True, если пользователь найден и пароль верен,
+                  None в противном случае.
+        """
         user = Users.query.filter_by(name=name, surname=surname).first()
 
         if user and check_password_hash(user.password, password):
             login_user(user)
             return True
 
-    def get_trains(self):
+    def get_trains(self) -> list:
+        """
+        Получение списка всех поездов из базы данных.
+
+        Returns:
+            trains: список объектов поездов.
+        """
         trains = Train.query.all()
         return trains
 
     def add_repair_inf(self,
-                       name,
-                       surname,
-                       train,
-                       defect,
-                       s_def,
-                       b_inf,
-                       date
-                       ):
+                       name: str,
+                       surname: str,
+                       train: str,
+                       defect: str,
+                       s_def: str,
+                       b_inf: str,
+                       date: str
+                       ) -> None:
+        """
+        Добавление новой информации о ремонте в базу данных.
+
+        Args:
+            name (str): имя исполнителя.
+            surname (str): фамилия исполнителя.
+            train (str): наименование поезда.
+            defect (str): неисправность.
+            s_def (str): разновидность неисправности.
+            b_inf (str): краткая информация о ремонте.
+            date (date): дата ремонта.
+        """
         new_repair_information = Repair_information(
             executer=name + ' ' + surname,
             train=train,
@@ -133,29 +210,73 @@ class DataAccess:
         db.session.add(new_repair_information)
         db.session.commit()
 
-    def get_repair_inf_with_date(self, train, start_date, end_date):
+    def get_repair_inf_with_date(self, train: str,
+                                 start_date: str,
+                                 end_date: str) -> list:
+        """
+        Получение информации о ремонте для определенного поезда
+        в указанный период.
+
+        Args:
+            train (str): наименование поезда.
+            start_date (date): начальная дата периода.
+            end_date (date): конечная дата периода.
+
+        Returns:
+            repair_inf: список объектов информации о ремонте.
+        """
         repair_inf = Repair_information.query.filter_by(
             train=train).filter(
                 Repair_information.date.between(start_date, end_date)).all()
         return repair_inf
 
-    def get_repair_inf(self, train):
+    def get_repair_inf(self, train: str) -> list:
+        """
+        Получение информации о ремонте за все время.
+
+        Args:
+            train (str): наименование поезда.
+
+        Returns:
+            repair_inf: список объектов информации о ремонте.
+        """
         repair_inf = Repair_information.query.filter_by(train=train).all()
         return repair_inf
 
-    def get_all_sub_defets(self, defect):
+    def get_all_sub_defets(self, defect: str) -> list:
+        """
+        Получение всех разновидностей неисправности
+        для указанной неисправности.
+
+        Args:
+            defect (str): неисправность.
+
+        Returns:
+             all_sub_defect: список объектов разновидностей неисправности.
+        """
         all_sub_defect = Defects.query.filter_by(defect=defect).all()
         return all_sub_defect
 
-    def get_sub_defet(self, sub_id):
+    def get_sub_defet(self, sub_id: int) -> object:
+        """
+        Получение разновидности неисправности по ее идентификатору.
+
+        Args:
+            sub_id (int): идентификатор разновидности неисправности.
+
+        Returns:
+            sub_defect: объект разновидности неисправности.
+        """
         sub_defect = Defects.query.filter_by(id=sub_id).first()
         return sub_defect
 
 
+# Добавление метаданных в базу.
 with app.app_context():
     db.create_all()
 
 
+# Стандартная функция flask-login, для извлечения обьекта пользователя.
 @manager.user_loader
 def load_user(user_id):
     return Users.query.get(user_id)
