@@ -59,7 +59,6 @@ body {
   border-radius: 15px;
 }
 
-
 #footer_par_col {
   font-size: 14px;
   width: 80px;
@@ -91,4 +90,9 @@ body {
 
 .con_articles {
   padding: 0px 30px 0px 30px;
+}
+
+.repair_information {
+  padding-left: 40px;
+  padding-right: 40px;
 }

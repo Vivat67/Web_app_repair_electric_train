@@ -48,12 +48,12 @@
                 </div>
             </nav>
         </div>
-        <div class="container mt-10 d-flex flex-column">
+        <div class="container mt-10 d-flex flex-column" style="padding: 0px 40px 0px 40px;">
             <h1 class="text-center" style=" color: aliceblue;">{{ all_sub_defects[0].defect }}</h1>
             <br><br>
             <ul class="list-group list-inline mx-auto justify-content-center">
                 {% for sub in all_sub_defects %}
-                <li class="fs-4">
+                <li class="fs-4 pb-4">
                     <a class="text-white lh-lg link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('diagnostics_sub_defect', sub_id=sub.id) }}">{{
                         sub.subspecies_defect }}</a>

@@ -54,7 +54,7 @@
                 </div>
             </nav>
         </div>
-        <div class="container mt-5 text-white">
+        <div class="container mt-3 text-white">
             <h2 class="text-center">Сведенья</h2><br><br>
             <div class="col-8 mx-auto">
                 {% for i in repair_inf %}
@@ -81,7 +81,7 @@
                 </p>
                 <p class="border-bottom">
                     Дата: {{ i.date.strftime('%d-%m-%Y') }}
-                </p>
+                </p><br><br>
 
                 {% endfor %}
             </div>
