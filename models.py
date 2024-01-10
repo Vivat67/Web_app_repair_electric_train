@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from main import app, manager, db
 from flask_migrate import Migrate
 from flask_login import login_user
+from werkzeug.security import check_password_hash, generate_password_hash
 
 migrate = Migrate(app, db)
 
@@ -10,7 +11,7 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     surname = db.Column(db.String(32))
-    password = db.Column(db.String(100))
+    password = db.Column(db.String(300))
     post = db.Column(db.String(32))
 
     def __repr__(self):
@@ -82,6 +83,7 @@ class DataAccess:
     """
     Класс служит для извлечения данных из БД.
     """
+
     def get_articles(self):
         articles = Articles.query.all()
         return articles
@@ -94,7 +96,7 @@ class DataAccess:
         new_user = Users(
             name=name,
             surname=surname,
-            password=password,
+            password=generate_password_hash(password),
             post=post
             )
         db.session.add(new_user)
@@ -103,7 +105,7 @@ class DataAccess:
     def get_user(self, name, surname, password):
         user = Users.query.filter_by(name=name, surname=surname).first()
 
-        if user and user.password == password:
+        if user and check_password_hash(user.password, password):
             login_user(user)
             return True
 

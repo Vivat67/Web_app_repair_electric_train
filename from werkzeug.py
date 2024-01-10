@@ -4,4 +4,4 @@ secret = '12345'
 
 hash = generate_password_hash(secret)
 print(check_password_hash(hash, secret))
-print(hash)
+print(len(hash))
