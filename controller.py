@@ -2,14 +2,12 @@
 Модуль содержит функции представления для шаблонов.
 """
 
-from flask import render_template, request, redirect, url_for, flash
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import login_required, logout_user
 
-
+from logger import logger
 from main import app
 from models import DataAccess
-
-from logger import logger
 
 # обьект для взаимодействия с базой данных.
 dataAccess = DataAccess()

@@ -2,12 +2,12 @@
 В данном модуле создаются метаданные для БД.
 """
 
-from flask_login import UserMixin
-from main import app, manager, db
+from flask_login import UserMixin, login_user
 from flask_migrate import Migrate
-from flask_login import login_user
 from werkzeug.security import check_password_hash, generate_password_hash
+
 from logger import logger
+from main import app, db, manager
 
 migrate = Migrate(app, db)
 
