@@ -9,10 +9,13 @@ from flask_login import login_required, logout_user
 from main import app
 from models import DataAccess
 
+from logger import logger
+
 # обьект для взаимодействия с базой данных.
 dataAccess = DataAccess()
 
 
+@logger.catch
 @app.route('/')
 def index():
     """
@@ -24,6 +27,7 @@ def index():
     return render_template('index.html')
 
 
+@logger.catch
 @app.route('/articles')
 @login_required
 def content():
@@ -37,6 +41,7 @@ def content():
     return render_template('articles.html', articles=articles)
 
 
+@logger.catch
 @app.route('/article/<int:article_id>')
 @login_required
 def article(article_id: int) -> object:
@@ -54,6 +59,7 @@ def article(article_id: int) -> object:
     return render_template('article.html', article=article)
 
 
+@logger.catch
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     """
@@ -88,6 +94,7 @@ def registration():
     return render_template('register.html')
 
 
+@logger.catch
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
@@ -115,6 +122,7 @@ def login():
     return render_template('login.html')
 
 
+@logger.catch
 @app.route('/logout')
 @login_required
 def logout():
@@ -128,6 +136,7 @@ def logout():
     return redirect(url_for('index'))
 
 
+@logger.catch
 @app.after_request
 def redirect_to_sign(response):
     """
@@ -144,6 +153,7 @@ def redirect_to_sign(response):
     return response
 
 
+@logger.catch
 @app.route('/repair_information', methods=['GET', 'POST'])
 @login_required
 def repair_information():
@@ -179,6 +189,7 @@ def repair_information():
         return render_template('repair_inf.html', trains=trains)
 
 
+@logger.catch
 @app.route('/repair_history', methods=['GET', 'POST'])
 @login_required
 def repair_history():
@@ -193,6 +204,7 @@ def repair_history():
     return render_template('repair_history.html', trains=trains)
 
 
+@logger.catch
 @app.route('/repair_history_continion', methods=['GET', 'POST'])
 @login_required
 def repair_history_continion():
@@ -219,6 +231,7 @@ def repair_history_continion():
         )
 
 
+@logger.catch
 @app.route('/diagnostics/<defect>')
 @login_required
 def diagnostics(defect: str):
@@ -236,6 +249,7 @@ def diagnostics(defect: str):
     return render_template('diagnostics.html', all_sub_defects=all_sub_defects)
 
 
+@logger.catch
 @app.route('/sub_defect/<int:sub_id>')
 @login_required
 def diagnostics_sub_defect(sub_id):

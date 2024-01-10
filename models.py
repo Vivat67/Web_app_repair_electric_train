@@ -7,6 +7,7 @@ from main import app, manager, db
 from flask_migrate import Migrate
 from flask_login import login_user
 from werkzeug.security import check_password_hash, generate_password_hash
+from logger import logger
 
 migrate = Migrate(app, db)
 
@@ -21,7 +22,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(300))
     post = db.Column(db.String(32))
 
-    def __repr__(self):
+    def __repr__(self) -> None:
         return (
             f'Имя: {self.name}\n'
             f'Фамилия: {self.surname}\n'
@@ -40,7 +41,7 @@ class Train(db.Model):
     production = db.Column(db.Date)
     last_repair = db.Column(db.Date)
 
-    def __repr__(self):
+    def __repr__(self) -> None:
         return (
             f'Наименование: {self.train}\n'
             f'Расположение: {self.location}\n'
@@ -57,7 +58,7 @@ class Defects(db.Model):
     subspecies_defect = db.Column(db.String(100))
     repair = db.Column(db.Text)
 
-    def __repr__(self):
+    def __repr__(self) -> None:
         return (f'Неисправность: {self.defect}\n'
                 f'Разновидность неисправности: {self.subspecies_defect}\n'
                 f'Ремонт: {self.repair}'
@@ -76,7 +77,7 @@ class Repair_information(db.Model):
     train = db.Column(db.String(20))
     date = db.Column(db.Date)
 
-    def __repr__(self):
+    def __repr__(self) -> None:
         return (
             f'Иполнитель: {self.executer}\n'
             f'Неисправность: {self.defect}\n'
@@ -94,7 +95,7 @@ class Articles(db.Model):
     title = db.Column(db.String(100), unique=True)
     content = db.Column(db.Text)
 
-    def __repr__(self):
+    def __repr__(self) -> None:
         return (f'Статья: {self.name}')
 
 
@@ -103,6 +104,7 @@ class DataAccess:
     Класс служит для извлечения данных из БД.
     """
 
+    @logger.catch
     def get_articles(self) -> list:
         """
         Получение списка всех статей из базы данных.
@@ -113,6 +115,7 @@ class DataAccess:
         articles = Articles.query.all()
         return articles
 
+    @logger.catch
     def get_article(self, article_id: int) -> object:
         """
         Получение статьи из базы данных по ее идентификатору.
@@ -126,6 +129,7 @@ class DataAccess:
         article = Articles.query.filter_by(id=article_id).first()
         return article
 
+    @logger.catch
     def add_user(self,
                  name: str,
                  surname: str,
@@ -149,6 +153,7 @@ class DataAccess:
         db.session.add(new_user)
         db.session.commit()
 
+    @logger.catch
     def get_user(self, name: str, surname: str, password: str) -> bool | None:
         """
         Получение пользователя из базы данных и проверка введенного пароля.
@@ -168,6 +173,7 @@ class DataAccess:
             login_user(user)
             return True
 
+    @logger.catch
     def get_trains(self) -> list:
         """
         Получение списка всех поездов из базы данных.
@@ -178,6 +184,7 @@ class DataAccess:
         trains = Train.query.all()
         return trains
 
+    @logger.catch
     def add_repair_inf(self,
                        name: str,
                        surname: str,
@@ -210,6 +217,7 @@ class DataAccess:
         db.session.add(new_repair_information)
         db.session.commit()
 
+    @logger.catch
     def get_repair_inf_with_date(self, train: str,
                                  start_date: str,
                                  end_date: str) -> list:
@@ -230,6 +238,7 @@ class DataAccess:
                 Repair_information.date.between(start_date, end_date)).all()
         return repair_inf
 
+    @logger.catch
     def get_repair_inf(self, train: str) -> list:
         """
         Получение информации о ремонте за все время.
@@ -243,6 +252,7 @@ class DataAccess:
         repair_inf = Repair_information.query.filter_by(train=train).all()
         return repair_inf
 
+    @logger.catch
     def get_all_sub_defets(self, defect: str) -> list:
         """
         Получение всех разновидностей неисправности
@@ -257,6 +267,7 @@ class DataAccess:
         all_sub_defect = Defects.query.filter_by(defect=defect).all()
         return all_sub_defect
 
+    @logger.catch
     def get_sub_defet(self, sub_id: int) -> object:
         """
         Получение разновидности неисправности по ее идентификатору.
@@ -277,6 +288,7 @@ with app.app_context():
 
 
 # Стандартная функция flask-login, для извлечения обьекта пользователя.
+@logger.catch
 @manager.user_loader
 def load_user(user_id):
     return Users.query.get(user_id)
