@@ -246,7 +246,8 @@ def diagnostics_sub_defect(sub_id):
         sub_id (int): идентификатор разновидности неисправности.
 
     Returns:
-        str: HTML-код страницы подробной информации о разновидности неисправности.
+        str: HTML-код страницы подробной информации
+        о разновидности неисправности.
         sub_defect: обьект описания неисправности.
     """
     sub_defect = dataAccess.get_sub_defet(sub_id)
