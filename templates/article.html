@@ -12,6 +12,7 @@
     <link rel="stylesheet"
         href="{{ url_for('static', filename='assets/css/content_page-Navbar-With-Button-icons.css') }}"">
     <link rel=" stylesheet" href="{{ url_for('static', filename='assets/css/content_page_styles.css') }}">
+    <link rel=" stylesheet" href="{{ url_for('static', filename='assets/css/articles.style.css') }}">
 </head>
 
 <body>
@@ -51,8 +52,7 @@
         </div>
         <div style="color: rgb(255, 255,255)" class="col align-self-center" id="content">
             <h1 class="text-center">{{ article.title }}</h1>
-            <br>
-            <p>{{ article.content|safe }}</p>
+            {{ article.content|safe }}
         </div>
         <div class="col d-flex flex-row align-items-end" id="footer"
             style="border-radius: 10px;border-top-width: 1px;border-top-color: #9ea3ab;">

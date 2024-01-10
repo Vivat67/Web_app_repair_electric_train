@@ -48,12 +48,12 @@
                 </div>
             </nav>
         </div>
-        <div class="container mt-10 d-flex flex-column">
+        <div class="container mt-10 d-flex flex-column con_articles">
             <h1 class="text-center" style=" color: aliceblue;">Статьи</h1>
             <br><br>
             <ul class="list-group list-inline mx-auto justify-content-center">
                 {% for article in articles %}
-                <li class="fs-4">
+                <li class="fs-4 pb-3">
                     <a class="text-white lh-lg link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('article', article_id=article.id) }}">{{
                         article.title }}</a>
