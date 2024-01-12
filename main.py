@@ -1,5 +1,5 @@
 """
-Модуль содержит конфин flask проекта.
+Модуль содержит конфиг flask проекта.
 Запускает приложение.
 """
 import os
@@ -10,9 +10,11 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_toastr import Toastr
 
+from uuid import uuid4
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = str(uuid4())
 
 # База данных.
 db = SQLAlchemy(app)

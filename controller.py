@@ -180,11 +180,10 @@ def repair_information():
                                  'message': "Запись добавлена"}, 'success'
                                  )
         return render_template('repair_inf.html', trains=trains)
-    else:
-        flash(
-                {'title': "Ошибка",
-                    'message': "Заполните все поля"}, 'error')
-        return render_template('repair_inf.html', trains=trains)
+    flash(
+            {'title': "Ошибка",
+                'message': "Заполните все поля"}, 'error')
+    return render_template('repair_inf.html', trains=trains)
 
 
 @logger.catch

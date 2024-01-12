@@ -12,17 +12,20 @@ from main import app, db, manager
 migrate = Migrate(app, db)
 
 
-class Users(db.Model, UserMixin):
+class BaseModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+
+class Users(BaseModel, UserMixin):
     """
     Табличка 'Пользователь'
     """
-    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
     surname = db.Column(db.String(32))
     password = db.Column(db.String(300))
     post = db.Column(db.String(32))
 
-    def __repr__(self) -> None:
+    def __repr__(self) -> str:
         return (
             f'Имя: {self.name}\n'
             f'Фамилия: {self.surname}\n'
@@ -31,17 +34,16 @@ class Users(db.Model, UserMixin):
             )
 
 
-class Train(db.Model):
+class Train(BaseModel):
     """
     Табличка 'Поезд'
     """
-    id = db.Column(db.Integer, primary_key=True)
     train = db.Column(db.String(32), unique=True)
     location = db.Column(db.String(32))
     production = db.Column(db.Date)
     last_repair = db.Column(db.Date)
 
-    def __repr__(self) -> None:
+    def __repr__(self) -> str:
         return (
             f'Наименование: {self.train}\n'
             f'Расположение: {self.location}\n'
@@ -49,27 +51,25 @@ class Train(db.Model):
             )
 
 
-class Defects(db.Model):
+class Defects(BaseModel):
     """
     Табличка 'Неисправности'
     """
-    id = db.Column(db.Integer, primary_key=True)
     defect = db.Column(db.String(64))
     subspecies_defect = db.Column(db.String(100))
     repair = db.Column(db.Text)
 
-    def __repr__(self) -> None:
+    def __repr__(self) -> str:
         return (f'Неисправность: {self.defect}\n'
                 f'Разновидность неисправности: {self.subspecies_defect}\n'
                 f'Ремонт: {self.repair}'
                 )
 
 
-class Repair_information(db.Model):
+class Repair_information(BaseModel):
     """
     Табличка 'Информация ремонта'
     """
-    id = db.Column(db.Integer, primary_key=True)
     executer = db.Column(db.String(32))
     defect = db.Column(db.String(64))
     subspecies_defect = db.Column(db.Text)
@@ -77,7 +77,7 @@ class Repair_information(db.Model):
     train = db.Column(db.String(20))
     date = db.Column(db.Date)
 
-    def __repr__(self) -> None:
+    def __repr__(self) -> str:
         return (
             f'Иполнитель: {self.executer}\n'
             f'Неисправность: {self.defect}\n'
@@ -87,15 +87,14 @@ class Repair_information(db.Model):
             )
 
 
-class Articles(db.Model):
+class Articles(BaseModel):
     """
     Табличка 'Статьи'
     """
-    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
     content = db.Column(db.Text)
 
-    def __repr__(self) -> None:
+    def __repr__(self) -> str:
         return (f'Статья: {self.name}')
 
 
