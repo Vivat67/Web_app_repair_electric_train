@@ -7,7 +7,7 @@ from flask_login import login_required, logout_user
 
 from logger import logger
 from main import app
-from models import DataAccess
+from models import DataAccess, Articles, Defects
 
 # обьект для взаимодействия с базой данных.
 dataAccess = DataAccess()
@@ -15,7 +15,7 @@ dataAccess = DataAccess()
 
 @logger.catch
 @app.route('/')
-def index():
+def index() -> str:
     """
     Обработчик для главной страницы.
 
@@ -28,7 +28,7 @@ def index():
 @logger.catch
 @app.route('/articles')
 @login_required
-def content():
+def content() -> tuple[str, list]:
     """
     Обработчик для страницы со списком статей.
 
@@ -42,7 +42,7 @@ def content():
 @logger.catch
 @app.route('/article/<int:article_id>')
 @login_required
-def article(article_id: int) -> object:
+def article(article_id: int) -> tuple[str, Articles]:
     """
     Обработчик для страницы со списком статей.
 
@@ -59,7 +59,7 @@ def article(article_id: int) -> object:
 
 @logger.catch
 @app.route('/registration', methods=['GET', 'POST'])
-def registration():
+def registration() -> str:
     """
     Обработчик для страницы регистрации пользователей.
     При удачной регистрации перенаправляет на авторизацию.
@@ -94,7 +94,7 @@ def registration():
 
 @logger.catch
 @app.route('/login', methods=['GET', 'POST'])
-def login():
+def login() -> str:
     """
     Обработчик для страницы входа в систему.
 
@@ -123,7 +123,7 @@ def login():
 @logger.catch
 @app.route('/logout')
 @login_required
-def logout():
+def logout() -> str:
     """
     Обработчик для выхода пользователя из системы.
 
@@ -136,7 +136,7 @@ def logout():
 
 @logger.catch
 @app.after_request
-def redirect_to_sign(response):
+def redirect_to_sign(response) -> str:
     """
     Перенаправление на страницу входа в систему при отказе в доступе.
 
@@ -154,7 +154,7 @@ def redirect_to_sign(response):
 @logger.catch
 @app.route('/repair_information', methods=['GET', 'POST'])
 @login_required
-def repair_information():
+def repair_information() -> tuple(str, list):
     """
     Обработчик для страницы информации о ремонтах.
 
@@ -189,7 +189,7 @@ def repair_information():
 @logger.catch
 @app.route('/repair_history', methods=['GET', 'POST'])
 @login_required
-def repair_history():
+def repair_history() -> tuple(str, list):
     """
     Обработчик для страницы истории ремонтов.
 
@@ -204,7 +204,7 @@ def repair_history():
 @logger.catch
 @app.route('/repair_history_continion', methods=['GET', 'POST'])
 @login_required
-def repair_history_continion():
+def repair_history_continion() -> tuple(str, list):
     """
     Обработчик для страницы фильтрации истории ремонтов.
 
@@ -231,7 +231,7 @@ def repair_history_continion():
 @logger.catch
 @app.route('/diagnostics/<defect>')
 @login_required
-def diagnostics(defect: str):
+def diagnostics(defect: str) -> tuple(str, list):
     """
     Обработчик для страницы диагностики.
 
@@ -249,7 +249,7 @@ def diagnostics(defect: str):
 @logger.catch
 @app.route('/sub_defect/<int:sub_id>')
 @login_required
-def diagnostics_sub_defect(sub_id):
+def diagnostics_sub_defect(sub_id: int) -> tuple(str, Defects):
     """
     Обработчик для страницы подробной информации о разновидности неисправности.
 
