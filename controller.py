@@ -101,23 +101,23 @@ def login():
     Returns:
         str: HTML-код страницы входа в систему.
     """
-    if request.method == 'POST':
-        name = request.form.get('name')
-        surname = request.form.get('surname')
-        password = request.form.get('password')
-        if name and password and surname:
-            if dataAccess.get_user(name, surname, password):
-                next_page = request.args.get('next')
-                return redirect(next_page or url_for('index'))
-            else:
-                flash(
-                    {'title': "Ошибка",
-                     'message': "Имя, фамилия или пароль не верны"}, 'error')
+    if request.method == 'GET':
+        return render_template('login.html')
+    name = request.form.get('name')
+    surname = request.form.get('surname')
+    password = request.form.get('password')
+    if name and password and surname:
+        if dataAccess.get_user(name, surname, password):
+            next_page = request.args.get('next')
+            return redirect(next_page or url_for('index'))
         else:
             flash(
-                    {'title': "Ошибка",
-                        'message': "Заполните все поля"}, 'error')
-    return render_template('login.html')
+                {'title': "Ошибка",
+                    'message': "Имя, фамилия или пароль не верны"}, 'error')
+    else:
+        flash(
+                {'title': "Ошибка",
+                    'message': "Заполните все поля"}, 'error')
 
 
 @logger.catch

@@ -12,11 +12,11 @@ from main import app, db, manager
 migrate = Migrate(app, db)
 
 
-class BaseModel(db.Model):
+class BaseModel:
     id = db.Column(db.Integer, primary_key=True)
 
 
-class Users(BaseModel, UserMixin):
+class Users(db.Model, UserMixin, BaseModel):
     """
     Табличка 'Пользователь'
     """
@@ -34,7 +34,7 @@ class Users(BaseModel, UserMixin):
             )
 
 
-class Train(BaseModel):
+class Train(db.Model, BaseModel):
     """
     Табличка 'Поезд'
     """
@@ -51,7 +51,7 @@ class Train(BaseModel):
             )
 
 
-class Defects(BaseModel):
+class Defects(db.Model, BaseModel):
     """
     Табличка 'Неисправности'
     """
@@ -66,7 +66,7 @@ class Defects(BaseModel):
                 )
 
 
-class Repair_information(BaseModel):
+class Repair_information(db.Model, BaseModel):
     """
     Табличка 'Информация ремонта'
     """
@@ -87,7 +87,7 @@ class Repair_information(BaseModel):
             )
 
 
-class Articles(BaseModel):
+class Articles(db.Model, BaseModel):
     """
     Табличка 'Статьи'
     """
@@ -115,7 +115,7 @@ class DataAccess:
         return articles
 
     @logger.catch
-    def get_article(self, article_id: int) -> object:
+    def get_article(self, article_id: int) -> Articles:
         """
         Получение статьи из базы данных по ее идентификатору.
 
@@ -267,7 +267,7 @@ class DataAccess:
         return all_sub_defect
 
     @logger.catch
-    def get_sub_defet(self, sub_id: int) -> object:
+    def get_sub_defet(self, sub_id: int) -> Defects:
         """
         Получение разновидности неисправности по ее идентификатору.
 
