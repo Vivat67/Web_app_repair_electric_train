@@ -70,11 +70,6 @@ def registration() -> str:
     """
     if request.method == 'GET':
         return render_template('register.html')
-    request.form.get('name')
-    request.form.get('surname')
-    request.form.get('password')
-    request.form.get('password2')
-    request.form.get('post')
     forms = dict(request.form)
     if check_all_fields_are_filled_in(forms, 5):
         flash(
@@ -105,11 +100,7 @@ def login() -> str:
     """
     if request.method == 'GET':
         return render_template('login.html')
-    request.form.get('name')
-    request.form.get('surname')
-    request.form.get('password')
     forms = dict(request.form)
-    print(forms.items())
     if check_all_fields_are_filled_in(forms, 3):
         flash(
                 {'title': "Ошибка",
@@ -170,20 +161,12 @@ def repair_information() -> tuple[str, list]:
     trains = dataAccess.get_trains()
     if request.method == 'GET':
         return render_template('repair_inf.html', trains=trains)
-    request.form.get('name')
-    request.form.get('surname')
-    request.form.get('train')
-    request.form.get('defect')
-    request.form.get('s_def')
-    request.form.get('b_inf')
-    request.form.get('date')
     forms = dict(request.form)
     if check_all_fields_are_filled_in(forms, 7):
         flash(
                 {'title': "Ошибка",
                     'message': "Заполните все поля"}, 'error')
         return render_template('repair_inf.html', trains=trains)
-    print(forms.values())
     dataAccess.add_repair_inf(**forms)
     flash(
                             {'title': "Успех",
