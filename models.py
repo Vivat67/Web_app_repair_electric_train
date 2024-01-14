@@ -139,17 +139,16 @@ class DataAccess:
         Добавление нового пользователя в базу данных.
 
         Args:
-            name (str): Имя пользователя.
-            surname (str): Фамилия пользователя.
-            password (str): Нехешированный пароль пользователя.
-            post (str): Должность пользователя.
+            name (str): имя пользователя.
+            surname (str): фамилия пользователя.
+            password (str): нехешированный пароль пользователя.
+            post (str): должность пользователя.
         """
         new_user = Users(
             name=name,
             surname=surname,
             password=generate_password_hash(password),
             post=post,
-             **kwargs
             )
         db.session.add(new_user)
         db.session.commit()
@@ -194,7 +193,6 @@ class DataAccess:
                        s_def: str,
                        b_inf: str,
                        date: str,
-                        **kwargs
                        ) -> None:
         """
         Добавление новой информации о ремонте в базу данных.

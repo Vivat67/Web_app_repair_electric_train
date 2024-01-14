@@ -70,17 +70,17 @@ def registration() -> str:
     """
     if request.method == 'GET':
         return render_template('register.html')
-    name = request.form.get('name')
-    surname = request.form.get('surname')
-    password = request.form.get('password')
-    password2 = request.form.get('password2')
-    post = request.form.get('post')
+    request.form.get('name')
+    request.form.get('surname')
+    request.form.get('password')
+    request.form.get('password2')
+    request.form.get('post')
     forms = dict(request.form)
     if check_all_fields_are_filled_in(forms, 5):
         flash(
             {'title': "Ошибка",
                 'message': "Заполните все поля"}, 'error')
-    elif password != password2:
+    elif forms['password'] != forms['password2']:
         flash(
             {'title': "Ошибка",
                 'message': "Пароли не совпадают"}, 'error')
@@ -105,21 +105,24 @@ def login() -> str:
     """
     if request.method == 'GET':
         return render_template('login.html')
-    name = request.form.get('name')
-    surname = request.form.get('surname')
-    password = request.form.get('password')
-    if name and password and surname:
-        if dataAccess.get_user(name, surname, password):
-            next_page = request.args.get('next')
-            return redirect(next_page or url_for('index'))
-        else:
-            flash(
-                {'title': "Ошибка",
-                    'message': "Имя, фамилия или пароль не верны"}, 'error')
-    else:
+    request.form.get('name')
+    request.form.get('surname')
+    request.form.get('password')
+    forms = dict(request.form)
+    print(forms.items())
+    if check_all_fields_are_filled_in(forms, 3):
         flash(
                 {'title': "Ошибка",
                     'message': "Заполните все поля"}, 'error')
+        return render_template('login.html')
+    if dataAccess.get_user(**forms):
+        next_page = request.args.get('next')
+        return redirect(next_page or url_for('index'))
+    else:
+        flash(
+            {'title': "Ошибка",
+                'message': "Имя, фамилия или пароль не верны"}, 'error')
+        return render_template('login.html')
 
 
 @logger.catch
@@ -167,24 +170,25 @@ def repair_information() -> tuple[str, list]:
     trains = dataAccess.get_trains()
     if request.method == 'GET':
         return render_template('repair_inf.html', trains=trains)
-    name = request.form.get('name')
-    surname = request.form.get('surname')
-    train = request.form.get('train')
-    defect = request.form.get('defect')
-    s_def = request.form.get('sub_defect')
-    b_inf = request.form.get('brief_information')
-    date = request.form.get('date')
-    if name and surname and train and defect and s_def and b_inf and date:
-        dataAccess.add_repair_inf(name, surname, train,
-                                  defect, s_def, b_inf, date)
+    request.form.get('name')
+    request.form.get('surname')
+    request.form.get('train')
+    request.form.get('defect')
+    request.form.get('s_def')
+    request.form.get('b_inf')
+    request.form.get('date')
+    forms = dict(request.form)
+    if check_all_fields_are_filled_in(forms, 7):
         flash(
-                                {'title': "Успех",
-                                 'message': "Запись добавлена"}, 'success'
-                                 )
+                {'title': "Ошибка",
+                    'message': "Заполните все поля"}, 'error')
         return render_template('repair_inf.html', trains=trains)
+    print(forms.values())
+    dataAccess.add_repair_inf(**forms)
     flash(
-            {'title': "Ошибка",
-                'message': "Заполните все поля"}, 'error')
+                            {'title': "Успех",
+                                'message': "Запись добавлена"}, 'success'
+                                )
     return render_template('repair_inf.html', trains=trains)
 
 
