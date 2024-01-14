@@ -9,6 +9,7 @@ from logger import logger
 from main import app
 from models import DataAccess, Articles, Defects
 
+
 # обьект для взаимодействия с базой данных.
 dataAccess = DataAccess()
 
@@ -74,7 +75,8 @@ def registration() -> str:
     password = request.form.get('password')
     password2 = request.form.get('password2')
     post = request.form.get('post')
-    if not (name and surname and password and password2 and post):
+    forms = dict(request.form)
+    if check_all_fields_are_filled_in(forms, 5):
         flash(
             {'title': "Ошибка",
                 'message': "Заполните все поля"}, 'error')
@@ -83,7 +85,7 @@ def registration() -> str:
             {'title': "Ошибка",
                 'message': "Пароли не совпадают"}, 'error')
     else:
-        dataAccess.add_user(name, surname, password, post)
+        dataAccess.add_user(**forms)
         return redirect(url_for('login')), flash(
                                 {'title': "Успех",
                                  'message': "Вы зарегестрировались"}, 'success'
@@ -154,7 +156,7 @@ def redirect_to_sign(response) -> str:
 @logger.catch
 @app.route('/repair_information', methods=['GET', 'POST'])
 @login_required
-def repair_information() -> tuple(str, list):
+def repair_information() -> tuple[str, list]:
     """
     Обработчик для страницы информации о ремонтах.
 
@@ -189,7 +191,7 @@ def repair_information() -> tuple(str, list):
 @logger.catch
 @app.route('/repair_history', methods=['GET', 'POST'])
 @login_required
-def repair_history() -> tuple(str, list):
+def repair_history() -> tuple[str, list]:
     """
     Обработчик для страницы истории ремонтов.
 
@@ -204,7 +206,7 @@ def repair_history() -> tuple(str, list):
 @logger.catch
 @app.route('/repair_history_continion', methods=['GET', 'POST'])
 @login_required
-def repair_history_continion() -> tuple(str, list):
+def repair_history_continion() -> tuple[str, list]:
     """
     Обработчик для страницы фильтрации истории ремонтов.
 
@@ -231,7 +233,7 @@ def repair_history_continion() -> tuple(str, list):
 @logger.catch
 @app.route('/diagnostics/<defect>')
 @login_required
-def diagnostics(defect: str) -> tuple(str, list):
+def diagnostics(defect: str) -> tuple[str, list]:
     """
     Обработчик для страницы диагностики.
 
@@ -249,7 +251,7 @@ def diagnostics(defect: str) -> tuple(str, list):
 @logger.catch
 @app.route('/sub_defect/<int:sub_id>')
 @login_required
-def diagnostics_sub_defect(sub_id: int) -> tuple(str, Defects):
+def diagnostics_sub_defect(sub_id: int) -> tuple[str, Defects]:
     """
     Обработчик для страницы подробной информации о разновидности неисправности.
 
@@ -263,3 +265,22 @@ def diagnostics_sub_defect(sub_id: int) -> tuple(str, Defects):
     """
     sub_defect = dataAccess.get_sub_defet(sub_id)
     return render_template('sub_defect.html', sub_defect=sub_defect)
+
+
+def check_all_fields_are_filled_in(forms: dict, fields: int) -> bool:
+    """
+    Функция проверяет что все поля формы заполнены.
+
+    Args:
+        forms: словарь, хранит значения, введенные в полях.
+        fields: колличество полей.
+
+    Returns:
+        bool: True - есть пустые поля.
+              False - все поля заполнены.
+
+    """
+    all_field = len(list(filter(lambda x: x != '', forms.values())))
+    if all_field != fields:
+        return True
+    return False

@@ -133,7 +133,8 @@ class DataAccess:
                  name: str,
                  surname: str,
                  password: str,
-                 post: str) -> None:
+                 post: str,
+                 **kwargs) -> None:
         """
         Добавление нового пользователя в базу данных.
 
@@ -147,7 +148,8 @@ class DataAccess:
             name=name,
             surname=surname,
             password=generate_password_hash(password),
-            post=post
+            post=post,
+             **kwargs
             )
         db.session.add(new_user)
         db.session.commit()
@@ -191,7 +193,8 @@ class DataAccess:
                        defect: str,
                        s_def: str,
                        b_inf: str,
-                       date: str
+                       date: str,
+                        **kwargs
                        ) -> None:
         """
         Добавление новой информации о ремонте в базу данных.
